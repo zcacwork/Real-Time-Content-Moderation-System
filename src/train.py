@@ -38,24 +38,4 @@ model.to(device)
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
 
-# Training loop
-for epoch in range(2):
-    model.train()
-    for batch in train_loader:
-        optimizer.zero_grad()
 
-        input_ids = batch['input_ids'].to(device)
-        attention_mask = batch['attention_mask'].to(device)
-        labels = batch['labels'].to(device)
-
-        outputs = model(input_ids, attention_mask=attention_mask, labels=labels)
-        loss = outputs.loss
-
-        loss.backward()
-        optimizer.step()
-
-    print(f"Epoch {epoch+1} completed")
-
-# Save model
-model.save_pretrained("../models/")
-tokenizer.save_pretrained("../models/")
